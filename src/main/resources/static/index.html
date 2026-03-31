@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Educação - Alunos</title>
+</head>
+<body>
+
+    <h1>Cadastro de Alunos</h1>
+
+    <input type="text" id="nome" placeholder="Nome">
+    <input type="number" id="nota" placeholder="Nota">
+    <button onclick="cadastrar()">Cadastrar</button>
+
+    <h2>Lista de Alunos</h2>
+    <ul id="lista"></ul>
+
+    <script>
+        const API = "http://localhost:8080/alunos";
+
+        function carregarAlunos() {
+            fetch(API)
+                .then(res => res.json())
+                .then(data => {
+                    const lista = document.getElementById("lista");
+                    lista.innerHTML = "";
+
+                    data.forEach(aluno => {
+                        const li = document.createElement("li");
+                        li.innerHTML = `
+                            ${aluno.nome} - Nota: ${aluno.nota}
+                            <button onclick="deletar(${aluno.id})">Excluir</button>
+                        `;
+                        lista.appendChild(li);
+                    });
+                });
+        }
+
+        function cadastrar() {
+            const nome = document.getElementById("nome").value;
+            const nota = document.getElementById("nota").value;
+
+            fetch(API, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ nome, nota })
+            }).then(() => {
+                carregarAlunos();
+            });
+        }
+
+        function deletar(id) {
+            fetch(`${API}/${id}`, {
+                method: "DELETE"
+            }).then(() => {
+                carregarAlunos();
+            });
+        }
+
+        // Carregar ao abrir
+        carregarAlunos();
+    </script>
+
+</body>
+</html>
