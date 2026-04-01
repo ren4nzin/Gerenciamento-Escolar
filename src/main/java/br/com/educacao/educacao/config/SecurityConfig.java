@@ -22,8 +22,10 @@ public class SecurityConfig {
             .requestMatchers(
                 "/auth/**",
                 "/alunos/**", 
+				"/css/**",
                 "/login.html",
                 "/index.html"
+				
             ).permitAll()
             .anyRequest().authenticated()
             );
