@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/style.css">
+    <title>Login e Cadastro</title>
+	
+</head>
+<body>
+    <h1>Gerenciador Escolar</h1>
+
+    <div class="container">
+        <!-- CADASTRO -->
+        <section>
+            <h2>Cadastro</h2>
+            <input id="regUser" placeholder="Usuário">
+            <input id="regPass" type="password" placeholder="Senha">
+            <button onclick="registrar()">Cadastrar</button>
+        </section>
+    </div>
+<script>
+const API = "http://localhost:8080/auth";
+
+// CADASTRO
+function registrar() {
+    fetch(API + "/register", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            username: document.getElementById("regUser").value,
+            password: document.getElementById("regPass").value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert("Usuário cadastrado com sucesso!");
+    });
+}
+</script>
+
+</body>
+</html>

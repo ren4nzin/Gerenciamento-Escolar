@@ -24,7 +24,8 @@ public class SecurityConfig {
                 "/alunos/**", 
 				"/css/**",
                 "/login.html",
-                "/index.html"
+                "/index.html",
+                "/Cadastro.html"
 				
             ).permitAll()
             .anyRequest().authenticated()
