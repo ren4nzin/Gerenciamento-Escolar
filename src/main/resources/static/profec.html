@@ -20,6 +20,16 @@
     <script>
         const API = "http://localhost:8080/turmas";
 
+        function validarAno(){
+		
+			let ano = document.getElementById("ano").value;
+				if (ano <=2000 || ano >=2050) {
+				alert("Por favor, insira um ano válido.");
+				return false; // Impede o envio do formulário
+			}
+			return true;
+		}
+        //tentei usar && mas não funcionou troquei para || e funcionou kkkkk
         function carregarTurmas() {
             fetch(API)
                 .then(res => res.json())
@@ -42,6 +52,10 @@
             const nome = document.getElementById("nome").value;
             const ano = document.getElementById("ano").value;
 			const semestre = document.getElementById("semestre").value;
+			
+				if (!validarAno()) {
+					return; // para tudo se for inválido
+				}
 
             fetch(API, {
                 method: "POST",
