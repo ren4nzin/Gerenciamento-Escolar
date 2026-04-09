@@ -11,6 +11,7 @@
 <div class="container">
     <input type="text" id="nome" placeholder="Nome">
     <input type="number" id="ano" placeholder="Ano">
+	<input type="number" id="semestre" placeholder="Semestre">
     <button onclick="cadastrar()">Cadastrar</button>
 
     <h2>Lista de Turmas</h2>
@@ -29,7 +30,7 @@
                     data.forEach(turma => {
                         const li = document.createElement("li");
                         li.innerHTML = `
-                            ${turma.nome} - Ano: ${turma.ano}
+                            ${turma.nome} - Ano: ${turma.ano} - semestre ${turma.semestre}
                             <button onclick="deletar(${turma.id})">Excluir</button>
                         `;
                         lista.appendChild(li);
@@ -40,13 +41,14 @@
         function cadastrar() {
             const nome = document.getElementById("nome").value;
             const ano = document.getElementById("ano").value;
+			const semestre = document.getElementById("semestre").value;
 
             fetch(API, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ nome, ano })
+                body: JSON.stringify({ nome, ano ,semestre})
             }).then(() => {
                 carregarTurmas();
             });

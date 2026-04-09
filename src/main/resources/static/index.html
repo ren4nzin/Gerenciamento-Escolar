@@ -12,13 +12,22 @@
     <input type="text" id="nome" placeholder="Nome">
     <input type="number" id="nota" placeholder="Nota">
     <button onclick="cadastrar()">Cadastrar</button>
-
+    
     <h2>Lista de Alunos</h2>
     <ul id="lista"></ul>
 </div>
     <script>
         const API = "http://localhost:8080/alunos";
 
+        function validarnota(){
+				
+			let nota = document.getElementById("nota").value;
+				if (nota <=0) {
+				alert("Por favor, insira uma nota válida.");
+				return false; // Impede o envio do formulário
+			}
+			return true;
+		}
         function carregarAlunos() {
             fetch(API)
                 .then(res => res.json())
@@ -40,6 +49,10 @@
         function cadastrar() {
             const nome = document.getElementById("nome").value;
             const nota = document.getElementById("nota").value;
+
+				if (!validarnota()) {
+				return; // para tudo se for inválido
+				}
 
             fetch(API, {
                 method: "POST",
