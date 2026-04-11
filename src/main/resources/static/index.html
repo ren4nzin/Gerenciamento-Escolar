@@ -6,21 +6,20 @@
     <title>Educação - Alunos</title>
 </head>
 <body>
-
     <h1>Cadastro de Alunos</h1>
 <div class="container">
     <input type="text" id="nome" placeholder="Nome">
     <input type="number" id="nota" placeholder="Nota">
+	<input type="text" id="turma" placeholder="id da Turma">
+	<!-- Turma é um objeto  -->
     <button onclick="cadastrar()">Cadastrar</button>
-    
     <h2>Lista de Alunos</h2>
     <ul id="lista"></ul>
-</div>
+    </div>
     <script>
         const API = "http://localhost:8080/alunos";
-
         function validarnota(){
-				
+		//valida se a nota não é negativa
 			let nota = document.getElementById("nota").value;
 				if (nota <=0) {
 				alert("Por favor, insira uma nota válida.");
@@ -34,37 +33,40 @@
                 .then(data => {
                     const lista = document.getElementById("lista");
                     lista.innerHTML = "";
-
                     data.forEach(aluno => {
                         const li = document.createElement("li");
                         li.innerHTML = `
-                            ${aluno.nome} - Nota: ${aluno.nota}
+                            ${aluno.nome} - Nota: ${aluno.nota} - Turma: ${aluno.turma?.nome || aluno.turma?.nome}
                             <button onclick="deletar(${aluno.id})">Excluir</button>
                         `;
                         lista.appendChild(li);
                     });
                 });
         }
-
         function cadastrar() {
             const nome = document.getElementById("nome").value;
             const nota = document.getElementById("nota").value;
+			const turmaId = document.getElementById("turma").value;
 
 				if (!validarnota()) {
 				return; // para tudo se for inválido
 				}
-
             fetch(API, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ nome, nota })
+                body: JSON.stringify({
+                 nome: nome,
+				 nota: parseFloat(nota),
+				  turma: {
+                id: parseInt(turmaNome)
+            }
+				})
             }).then(() => {
                 carregarAlunos();
             });
         }
-
         function deletar(id) {
             fetch(`${API}/${id}`, {
                 method: "DELETE"
@@ -72,11 +74,8 @@
                 carregarAlunos();
             });
         }
-
         // Carregar ao abrir
-        carregarAlunos();
-		
+        carregarAlunos();	
     </script>
-
-</body>
-</html>
+    </body>
+    </html>

@@ -13,16 +13,21 @@ public class Professor {
     private int cargaHoraria;
     private double horaAula;
 
-
-
     public Professor() {}
 
-    public Professor(Long id, String nome, int cargaHoraria,double horaAula) {
+    public Professor(Long id, String nome,double horaAula) {
         this.id = id;
+        this.nome = nome;
+        this.horaAula = horaAula;
+    }
+	public Professor (Long id, String nome, int cargaHoraria,double horaAula){
+	    this.id = id;
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
         this.horaAula = horaAula;
-    }
+	    
+	}
+
     public long getId (){return id;}
     public String getNome (){return nome;}
     public int getCargaHoraria (){return cargaHoraria;}

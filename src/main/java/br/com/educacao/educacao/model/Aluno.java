@@ -12,31 +12,47 @@ public class Aluno {
     private String nome;
     private Double nota;
 	private String materia;
-    private int semestre
-
+    private int semestre;
+	
+	 @ManyToOne
+    @JoinColumn(name = "turma_id")
+	private Turma turma;
+	//aluno tem uma turma
+	
     public Aluno() {}
       
 	  public Aluno(Long id, String nome, Double nota, String materia) {
-        this.id = id;
+         this.id = id;
         this.nome = nome;
-       
-    public Aluno(Long id, String nome, Double nota, String materia,int semestre) {
+        this.nota = nota;
+		this.materia = materia;
+	  }
+	    public Aluno(Long id, String nome, Double nota, Turma turma) {
         this.id = id;
         this.nome = nome;
         this.nota = nota;
-		this.materia=materia;
+		this.turma = turma;
+	  }
+	    public Aluno( String nome, Double nota, String materia,int semestre,Turma turma) {
+        this.nome = nome;
+        this.nota = nota;
+		this.materia = materia;
 		this.semestre = semestre;
-    }
-
+		this.turma = turma;
+		
+		
+	}
     public Long getId() { return id; }
     public String getNome() { return nome; }
     public Double getNota() { return nota; }
 	public String getMateria(){return materia;}
-	public String getSemestre(){return semestre;}
+	public int getSemestre(){return semestre;}
+	public Turma getTurma() {return turma;}
 
     public void setId(Long id) { this.id = id; }
     public void setNome(String nome) { this.nome = nome; }
     public void setNota(Double nota) { this.nota = nota; }
 	public void setMateria(String materia){this.materia=materia;}
-	public void setSemestre(String semestre){this.semestre=semestre;}
+	public void setSemestre(int semestre){this.semestre=semestre;}
+	public void setTurma (Turma turma) {this.turma=turma;}
 }
