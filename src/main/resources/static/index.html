@@ -10,6 +10,7 @@
 <div class="container">
     <input type="text" id="nome" placeholder="Nome">
     <input type="number" id="nota" placeholder="Nota">
+	 <input type="text" id="cpf" placeholder="CPf">
 	<select id="turma"></select>
 	<!-- Turma é um objeto  -->
     <button onclick="cadastrar()">Cadastrar</button>
@@ -36,7 +37,7 @@
                     data.forEach(aluno => {
                         const li = document.createElement("li");
                         li.innerHTML = `
-                            ${aluno.nome} - Nota: ${aluno.nota} - Turma: ${aluno.turma?.nome}
+                            ${aluno.nome} - Nota: ${aluno.nota}${aluno.cpf} - Turma: ${aluno.turma?.nome} 
                             <button onclick="deletar(${aluno.id})">Excluir</button>
                         `;
                         lista.appendChild(li);
@@ -56,7 +57,7 @@
             data.forEach(turma => {
                 const option = document.createElement("option");
                 option.value = turma.id;       // envia o ID
-                option.textContent = turma.nome; // mostra o nome
+                option.textContent = turma.nome; // mostra o nome da turma
                 select.appendChild(option);
             });
         });
@@ -65,7 +66,9 @@
         function cadastrar() {
             const nome = document.getElementById("nome").value;
             const nota = document.getElementById("nota").value;
+			const cpf = document.getElementById("cpf").value;
 			const turmaId = document.getElementById("turma").value;
+         
 
 				if (!validarnota()) {
 				return; // para tudo se for inválido
@@ -93,6 +96,8 @@
                 carregarAlunos();
             });
         }
+		
+		
         // Carregar ao abrir
         carregarAlunos();	
 		carregarTurmas();
