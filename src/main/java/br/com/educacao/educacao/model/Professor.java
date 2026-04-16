@@ -32,17 +32,18 @@ public class Professor {
         this.cargaHoraria = cargaHoraria;
         this.horaAula = horaAula;
 		this.turma =turma;
-	    
 	}
 
     public long getId (){return id;}
     public String getNome (){return nome;}
     public int getCargaHoraria (){return cargaHoraria;}
     public double getHoraAula() {return horaAula;}
+	public Turma getTurma() {return turma;}
 
     public void setId (Long id){this.id = id; }
     public void setNome (String nome){this.nome = nome; }
     public void setCargaHoraria (int cargaHoraria){this.cargaHoraria = cargaHoraria; }
     public void setHoraAula(double horaAula){this.horaAula = horaAula; }
+	public void setTurma(Turma turma){this.turma = turma;}
 
 }

@@ -22,12 +22,14 @@ public class SecurityConfig {
             .requestMatchers(
                 "/auth/**",
                 "/alunos/**", 
+				"professores/**",
 				"/turmas/**",
 				"/css/**",
                 "/login.html",
                 "/index.html",
                 "/Cadastro.html",
-				"/profec.html"
+				"/profec.html",
+				"Acad.html"
 				
             ).permitAll()
             .anyRequest().authenticated()
