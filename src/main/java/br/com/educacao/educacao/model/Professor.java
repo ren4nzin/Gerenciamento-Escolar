@@ -12,6 +12,12 @@ public class Professor {
     private String nome;
     private int cargaHoraria;
     private double horaAula;
+	
+	@ManyToOne
+    @JoinColumn(name = "turma_id")
+	private Turma turma;
+      //Professor tem uma turma assim como aluno 
+
 
     public Professor() {}
 
@@ -20,11 +26,12 @@ public class Professor {
         this.nome = nome;
         this.horaAula = horaAula;
     }
-	public Professor (Long id, String nome, int cargaHoraria,double horaAula){
+	public Professor (Long id, String nome, int cargaHoraria,double horaAula,Turma turma){
 	    this.id = id;
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
         this.horaAula = horaAula;
+		this.turma =turma;
 	    
 	}
 
