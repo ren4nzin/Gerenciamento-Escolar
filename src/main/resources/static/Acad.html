@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/instyle.css">
+    <title>Educação - Professor</title>
+</head>
+<body>
+    <h1>Cadastro de Professores</h1>
+<div class="container">
+    <input type="text" id="nome" placeholder="Nome">
+    <input type="number" id="cargaHoraria" placeholder="cargaHoraria">
+	 <input type="number" id="horaAula" placeholder="horaAula">
+	<select id="turma"></select>
+	<!-- Turma é um objeto  -->
+    <button onclick="cadastrar()">Cadastrar</button>
+    <h2>Lista de Professores</h2>
+    <ul id="lista"></ul>
+    </div>
+    <script>
+        const API = "http://localhost:8080/professores";
+      function validarcargaHoraria(){
+	       //valida se a cargaHoraria não é negativa
+			let nota = document.getElementById("cargaHoraria").value;
+				if (cargaHoraria <=0) {
+				alert("Por favor, insira uma cargaHoraria válida.");
+				return false; // Impede o envio do formulário
+			}
+			return true;
+		}
+        function carregarProfessores() {
+            fetch(API)
+                .then(res => res.json())
+                .then(data => {
+                    const lista = document.getElementById("lista");
+                    lista.innerHTML = "";
+                    data.forEach(professor => {
+                        const li = document.createElement("li");
+                        li.innerHTML = `
+                            ${professor.nome} - cargaHoraria: ${professor.cargaHoraria}- horaAula: ${professor.horaAula} - Turma: ${professor.turma?.nome} 
+                            <button onclick="deletar(${professor.id})">Excluir</button>
+                        `;
+                        lista.appendChild(li);
+                    });
+                });
+        }
+		<!--Funcaõ que carrega as turmas cadastradas no banco de dados para selecionar -->
+		function carregarTurmas() {
+    fetch("http://localhost:8080/turmas")
+        .then(res => res.json())
+        .then(data => {
+            const select = document.getElementById("turma");
+
+            // opção padrão
+            select.innerHTML = '<option value="">Selecione a turma</option>';
+
+            data.forEach(turma => {
+                const option = document.createElement("option");
+                option.value = turma.id;       // envia o ID
+                option.textContent = turma.nome; // mostra o nome da turma
+                select.appendChild(option);
+            });
+        });
+        }
+			<!--Funcão que cadastra e valida-->
+        function cadastrar() {
+            const nome = document.getElementById("nome").value;
+            const cargaHoraria = document.getElementById("cargaHoraria").value;
+			const horaAula = document.getElementById("horaAula").value;
+			const turmaId = document.getElementById("turma").value;
+         
+
+				if (!validarcargaHoraria()) {
+				return; // para tudo se for inválido
+				}
+            fetch(API, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                 nome: nome,
+				 cargaHoraria: parseFloat(cargaHoraria),
+				 horaAula:horaAula,
+				 turma: {
+                id: parseInt(turmaId)
+				//inputs
+            }
+				})
+            }).then(() => {
+                carregarProfessores();
+				//Para carregar automaticamnete depois de cadastrar
+            });
+        }
+        function deletar(id) {
+            fetch(`${API}/${id}`, {
+                method: "DELETE"
+            }).then(() => {
+                carregarProfessores();
+            });
+        }
+		
+		
+        // Carregar ao abrir
+        carregarProfessores();	
+		carregarTurmas();
+    </script>
+    </body>
+    </html>
