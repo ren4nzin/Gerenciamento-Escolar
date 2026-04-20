@@ -15,6 +15,13 @@ public class Aluno {
     private int semestre;
 	private String cpf;
 	
+	
+	@OneToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+	
+	
+	
 	 @ManyToOne
     @JoinColumn(name = "turma_id")
 	private Turma turma;
@@ -49,9 +56,9 @@ public class Aluno {
     public Double getNota() { return nota; }
 	public String getMateria(){return materia;}
 	public int getSemestre(){return semestre;}
+	public Usuario getUsuario() { return usuario; }
 	public Turma getTurma() {return turma;}
     public String getCpf () {return cpf;}
-	
 
 
     public void setId(Long id) { this.id = id; }
@@ -59,6 +66,7 @@ public class Aluno {
     public void setNota(Double nota) { this.nota = nota; }
 	public void setMateria(String materia){this.materia=materia;}
 	public void setSemestre(int semestre){this.semestre=semestre;}
+	public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 	public void setTurma (Turma turma) {this.turma=turma;}
 	public void setCpf (String cpf) {this.cpf =cpf;}
 }
