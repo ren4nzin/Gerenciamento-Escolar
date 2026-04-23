@@ -15,6 +15,7 @@ public class Usuario {
     public Usuario() {}
 
     public Usuario(String cpf,String username, String password) {
+		this.cpf = cpf;
         this.username = username;
         this.password = password;
     }

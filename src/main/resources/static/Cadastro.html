@@ -26,12 +26,14 @@ const API = "http://localhost:8080/auth";
 // CADASTRO
 
 function registrar() {
-    fetch(API + "/register", {
+    fetch(API + "/register/aluno", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
             username: document.getElementById("regUser").value,
             password: document.getElementById("regPass").value
+			 nome: document.getElementById("regNome").value,  
+            cpf: document.getElementById("regCpf").value 
         })
     })
     .then(res => res.json())
